@@ -4,7 +4,7 @@ export default {
         tick: null
     },
     getters: {
-        GetTicker: state => state.tick
+        GetTicker: state => Date(state.tick)
     },
     mutations: {
         _onmessageTicker: (state, data) => {
