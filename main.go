@@ -134,6 +134,7 @@ func notify() {
 }
 
 func main() {
+	http.Handle("/", http.FileServer(http.Dir("static")))
 	http.HandleFunc("/table", greet)
 	http.HandleFunc("/timer", timer)
 	http.ListenAndServe("0.0.0.0:9999", nil)
