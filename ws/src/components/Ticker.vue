@@ -10,11 +10,11 @@ export default {
     name: "Ticker",
     data() {
         return {
-            wsTicker: new WebSocket(`ws://${location.hostname}:9999/timer`),
+            ws: new WebSocket(`ws://${location.hostname}:9999/timer`),
         };
     },
     created() {
-        this.wsTicker.onmessage = this.receive;
+        this.ws.onmessage = this.receive;
     },
     computed: {
         ...mapGetters("ticker", ["GetTicker"]),

@@ -6,7 +6,7 @@
         <table class="pure-table pure-table-bordered">
             <thead>
                 <tr>
-                    <th v-for="(h, i) in headers" :key="i">{{h.text}}</th>
+                    <th v-for="(field, i) in headers" :key="i">{{field}}</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,16 +28,12 @@ export default {
     name: "Table",
     data() {
         return {
-            wsTable: new WebSocket(`ws://${location.hostname}:9999/table`),
-            headers: [
-                { text: "321", value: "num" },
-                { text: "123", value: "text" },
-                { text: "delete" },
-            ],
+            ws: new WebSocket(`ws://${location.hostname}:9999/table`),
+            headers: ["number", "text", "delete"],
         };
     },
     created() {
-        this.wsTable.onmessage = this.receive;
+        this.ws.onmessage = this.receive;
     },
     computed: {
         ...mapGetters("table", ["GetTable"]),
@@ -48,10 +44,10 @@ export default {
         }),
         Add() {
             let msg = { text: "hello!", num: "11" };
-            this.wsTable.send(JSON.stringify(msg));
+            this.ws.send(JSON.stringify(msg));
         },
         Del(index) {
-            this.wsTable.send(JSON.stringify({ index: index.toString() }));
+            this.ws.send(JSON.stringify({ index: index.toString() }));
         },
     },
 };
