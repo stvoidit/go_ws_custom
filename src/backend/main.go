@@ -8,17 +8,17 @@ import (
 	"sync"
 	"time"
 
-	ws "github.com/gorilla/websocket"
+	"github.com/gorilla/websocket"
 )
 
 // ConnectionsPool - ...
 type ConnectionsPool struct {
 	mu   *sync.RWMutex
-	Cons map[net.Addr]*ws.Conn
+	Cons map[net.Addr]*websocket.Conn
 }
 
 // Add - ...
-func (cp *ConnectionsPool) Add(c *ws.Conn) {
+func (cp *ConnectionsPool) Add(c *websocket.Conn) {
 	cp.mu.Lock()
 	cp.Cons[c.RemoteAddr()] = c
 	cp.mu.Unlock()
@@ -35,7 +35,7 @@ func (cp *ConnectionsPool) Remove(addr net.Addr) {
 }
 
 // Get - ...
-func (cp *ConnectionsPool) Get(addr net.Addr) *ws.Conn {
+func (cp *ConnectionsPool) Get(addr net.Addr) *websocket.Conn {
 	cp.mu.RLock()
 	defer cp.mu.RUnlock()
 	return cp.Cons[addr]
@@ -45,13 +45,13 @@ func (cp *ConnectionsPool) Get(addr net.Addr) *ws.Conn {
 func NewConnectionsPool() *ConnectionsPool {
 	return &ConnectionsPool{
 		mu:   new(sync.RWMutex),
-		Cons: make(map[net.Addr]*ws.Conn)}
+		Cons: make(map[net.Addr]*websocket.Conn)}
 }
 
 var (
 	connections *ConnectionsPool
 	data        = make([]map[string]string, 0)
-	upgrade     = ws.Upgrader{CheckOrigin: func(r *http.Request) bool { return true }, ReadBufferSize: 1024, WriteBufferSize: 1024}
+	upgrade     = websocket.Upgrader{CheckOrigin: func(r *http.Request) bool { return true }, ReadBufferSize: 1024, WriteBufferSize: 1024}
 )
 
 func init() {
@@ -77,7 +77,7 @@ func greet(w http.ResponseWriter, r *http.Request) {
 			select {
 			default:
 				var rec map[string]string
-				if err := connections.Get(addr).ReadJSON(&rec); ws.IsCloseError(err, ws.CloseGoingAway, ws.CloseNoStatusReceived) {
+				if err := connections.Get(addr).ReadJSON(&rec); websocket.IsCloseError(err, websocket.CloseGoingAway, websocket.CloseNoStatusReceived) {
 					return
 				}
 				if val, ok := rec["index"]; ok {
