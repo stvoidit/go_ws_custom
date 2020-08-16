@@ -14,14 +14,14 @@ export default {
         };
     },
     created() {
-        this.wsTicker.onmessage = this.reciveTicker;
+        this.wsTicker.onmessage = this.receive;
     },
     computed: {
         ...mapGetters("ticker", ["GetTicker"]),
     },
     methods: {
         ...mapActions("ticker", {
-            reciveTicker: "onmessageTicker",
+            receive: "onmessage",
         }),
     },
 };

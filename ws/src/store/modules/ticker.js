@@ -7,13 +7,13 @@ export default {
         GetTicker: state => Date(state.tick)
     },
     mutations: {
-        _onmessageTicker: (state, data) => {
+        _onmessage: (state, data) => {
             state.tick = data.tick
         }
     },
     actions: {
-        onmessageTicker: (ctx, event) => {
-            ctx.commit("_onmessageTicker", JSON.parse(event.data))
+        onmessage: (ctx, event) => {
+            ctx.commit("_onmessage", JSON.parse(event.data))
         }
     }
 }

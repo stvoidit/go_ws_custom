@@ -37,14 +37,14 @@ export default {
         };
     },
     created() {
-        this.wsTable.onmessage = this.reciveTable;
+        this.wsTable.onmessage = this.receive;
     },
     computed: {
         ...mapGetters("table", ["GetTable"]),
     },
     methods: {
         ...mapActions("table", {
-            reciveTable: "onmessageTable",
+            receive: "onmessage",
         }),
         Add() {
             let msg = { text: "hello!", num: "11" };

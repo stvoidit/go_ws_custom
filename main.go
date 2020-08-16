@@ -50,7 +50,6 @@ func greet(w http.ResponseWriter, r *http.Request) {
 }
 
 func timer(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("connect")
 	conn, err := upgrade.Upgrade(w, r, nil)
 	if err != nil {
 		fmt.Println("upgrade:", err)
@@ -68,6 +67,8 @@ func timer(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 			ticker.Reset(time.Second)
+		case <-r.Context().Done():
+			return
 		}
 	}
 }

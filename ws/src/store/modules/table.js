@@ -7,13 +7,13 @@ export default {
         GetTable: state => state.table
     },
     mutations: {
-        _onmessageTable: (state, data) => {
+        _onmessage: (state, data) => {
             state.table = data.table
         },
     },
     actions: {
-        onmessageTable: (ctx, event) => {
-            ctx.commit("_onmessageTable", JSON.parse(event.data))
+        onmessage: (ctx, event) => {
+            ctx.commit("_onmessage", JSON.parse(event.data))
         }
     }
 }
