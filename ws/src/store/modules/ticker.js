@@ -1,18 +1,18 @@
 export default {
     namespaced: true,
     state: {
-        tick: new Date()
+        tick: null
     },
     getters: {
         GetTicker: state => state.tick
     },
     mutations: {
         _onmessageTicker: (state, data) => {
-            state.tick = new Date(Date.parse(data.tick))
+            state.tick = data.tick
         }
     },
     actions: {
-        onmessage: (ctx, event) => {
+        onmessageTicker: (ctx, event) => {
             ctx.commit("_onmessageTicker", JSON.parse(event.data))
         }
     }

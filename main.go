@@ -63,7 +63,7 @@ func timer(w http.ResponseWriter, r *http.Request) {
 	for {
 		select {
 		case t := <-ticker.C:
-			if err := conn.WriteJSON(map[string]interface{}{"tick": t}); err != nil {
+			if err := conn.WriteJSON(map[string]interface{}{"tick": t.Unix()}); err != nil {
 				fmt.Println("ticker:", err)
 				return
 			}

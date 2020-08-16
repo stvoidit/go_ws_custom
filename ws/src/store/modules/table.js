@@ -12,7 +12,7 @@ export default {
         },
     },
     actions: {
-        onmessage: (ctx, event) => {
+        onmessageTable: (ctx, event) => {
             ctx.commit("_onmessageTable", JSON.parse(event.data))
         }
     }
