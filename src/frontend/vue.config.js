@@ -3,7 +3,7 @@ module.exports = {
     devServer: {
         proxy: "http://0.0.0.0:9999"
     },
-    outputDir: "../build/static",
+    outputDir: "../../build/static",
     pages: {
         index: "src/main.js"
     }
